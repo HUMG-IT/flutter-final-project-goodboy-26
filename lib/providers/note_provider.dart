@@ -11,7 +11,7 @@ class NoteProvider with ChangeNotifier {
   List<Note> get notes => _notes;
 
   NoteProvider() {
-    loadNotes(); // tự động load khi khởi tạo
+    loadNotes(); 
   }
 
   Future<void> loadNotes() async {
@@ -32,7 +32,7 @@ class NoteProvider with ChangeNotifier {
   Future<void> addNote(Note note) async {
     try {
       await _db.collection(_collection).doc(note.id).set(note.toJson());
-      await loadNotes(); // reload để cập nhật danh sách
+      await loadNotes();
     } catch (e) {
       debugPrint('Lỗi thêm note: $e');
       _showError('Không thể thêm ghi chú. Vui lòng thử lại!');

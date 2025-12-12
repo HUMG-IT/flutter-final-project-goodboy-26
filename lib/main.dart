@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => NoteProvider()..loadNotes(), // load ngay khi khởi động
+      create: (_) => NoteProvider()..loadNotes(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Note App',

@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/models/note.dart';
-import 'package:flutter_application_1/providers/note_provider.dart';
-import 'package:flutter_application_1/screens/note_list_screen.dart';
+import 'package:flutter_final_project_goodboy_26/models/note.dart';
+import 'package:flutter_final_project_goodboy_26/providers/note_provider.dart';
+import 'package:flutter_final_project_goodboy_26/screens/note_list_screen.dart';
 
 void main() {
   testWidgets('App chạy được, hiển thị màn hình danh sách', (tester) async {
@@ -20,7 +20,6 @@ void main() {
       ),
     );
 
-    // Chỉ cần thấy dòng chữ này là đủ → chứng tỏ app chạy, không crash, không treo
     expect(find.text('Chưa có ghi chú nào'), findsOneWidget);
     expect(find.byType(FloatingActionButton), findsOneWidget);
   });
@@ -33,7 +32,7 @@ void main() {
       Note(title: "Học Flutter", content: "Rất vui"),
       Note(title: "Ngủ", isCompleted: true),
     ]);
-    provider.notifyListeners(); // báo UI biết có dữ liệu mới
+    provider.notifyListeners();
 
     await tester.pumpWidget(
       ChangeNotifierProvider.value(

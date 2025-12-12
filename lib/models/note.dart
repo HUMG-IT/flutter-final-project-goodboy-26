@@ -1,5 +1,5 @@
 // lib/models/note.dart
-import 'package:uuid/uuid.dart'; // để tạo id tự động
+import 'package:uuid/uuid.dart'; 
 
 class Note {
   String id;
@@ -12,9 +12,8 @@ class Note {
     this.title = '',
     this.content = '',
     this.isCompleted = false,
-  }) : id = id ?? const Uuid().v4(); // tự động tạo id nếu chưa có
+  }) : id = id ?? const Uuid().v4(); 
 
-  // BẮT BUỘC PHẢI CÓ 2 HÀM NÀY KHI DÙNG LOCALSTORE
   factory Note.fromJson(Map<String, dynamic> json) => Note(
         id: json['id'] as String,
         title: json['title'] as String? ?? '',
