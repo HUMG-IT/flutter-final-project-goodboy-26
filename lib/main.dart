@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers/note_provider.dart';
+import 'screens/note_list_screen.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return ChangeNotifierProvider(
+      create: (_) => NoteProvider()..loadNotes(), // load ngay khi khởi động
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Note App',
+        theme: ThemeData(primarySwatch: Colors.deepPurple, useMaterial3: true),
+        home: const NoteListScreen(),
       ),
     );
   }

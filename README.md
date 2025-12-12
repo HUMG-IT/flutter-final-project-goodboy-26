@@ -2,9 +2,9 @@
 # Bài tập lớn - Phát triển ứng dụng với Flutter
 
 ## Thông tin sinh viên
-- **Họ và tên**: _________
-- **MSSV**: _________
-- **Lớp**: _________
+- **Họ và tên**: Hoàng Duy Hải
+- **MSSV**: 2221050041
+- **Lớp**: DCCTCLCK67B
 
 ## Giới thiệu
 Đây là yêu cầu của bài tập lớn cho một trong hai học phần **Phát triển ứng dụng di động đa nền tảng 1 (mã học phần 7080325) và Phát triển ứng dụng cho thiết bị di động + BTL (mã học phần 7080115)**. Sinh viên sẽ xây dựng một ứng dụng di động hoàn chỉnh sử dụng Flutter và Dart, áp dụng các kiến thức đã học về lập trình giao diện người dùng, quản lý trạng thái, tích hợp API hoặc/và CSDL, kiểm thử tự động và CI/CD với GitHub Actions.
@@ -66,6 +66,16 @@ Sinh viên cần liệt kê một số công nghệ và thư viện cần sử d
 - **GitHub Actions**: Để tự động hóa quy trình kiểm thử khi có thay đổi mã nguồn.
 
 ## Báo cáo kết quả
+
+- Ứng dụng ghi chú hoàn chỉnh bằng Flutter + Provider + SharedPreferences
+- Có unit test và widget test (thư mục test/)
+- Sử dụng lưu trữ cục bộ dựa trên file JSON dạng NoSQL
+- GitHub Actions chạy tự động, tất cả test pass 
+- Link GitHub Actions: https://github.com/goodboy-26/Application-management-notes/actions
+
+
+---
+
 Sinh viên cần tạo tài liệu báo cáo kết quả, hướng dẫn cài đặt ứng dụng trên thiết bị di động hoặc máy ảo để giám khảo có thể kiểm tra ứng dụng một cách dễ dàng. Ví dụ:
 1. Tải mã nguồn từ repository.
     ```bash
@@ -140,7 +150,7 @@ Sinh viên cần tạo tài liệu báo cáo kết quả, hướng dẫn cài đ
 - **9/10**: Hoàn thiện kiểm thử CRUD, trạng thái, tích hợp API/CSDL; UI thân thiện.
 - **10/10**: Tối ưu hóa hoàn chỉnh, UI/UX mượt mà, CI/CD đầy đủ và ổn định.
 
-## Tự đánh giá điểm: X/10
+## Tự đánh giá điểm: 10/10
 Sinh viên cần tự đánh giá mức độ hoàn thiện của ứng dụng và so sánh với tiêu chí đánh giá để xác định điểm cuối cùng. Điểm tự đánh giá sẽ được sử dụng như một tiêu chí tham khảo cho giảng viên đánh giá cuối cùng.
 
 Chúc các bạn hoàn thành tốt bài tập lớn và khám phá thêm nhiều kiến thức bổ ích qua dự án này!
