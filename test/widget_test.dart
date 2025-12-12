@@ -1,4 +1,3 @@
-// test/widget_test.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +7,7 @@ import 'package:flutter_final_project_goodboy_26/screens/note_list_screen.dart';
 
 void main() {
   testWidgets('App chạy được, hiển thị màn hình danh sách', (tester) async {
-    // Tạo provider nhưng KHÔNG gọi loadNotes() → tránh treo hoàn toàn
-    final provider = NoteProvider();
+    final provider = NoteProvider(isTestMode: true);
 
     await tester.pumpWidget(
       ChangeNotifierProvider.value(
@@ -25,14 +23,10 @@ void main() {
   });
 
   testWidgets('Có thể thêm note giả và thấy trên UI', (tester) async {
-    final provider = NoteProvider();
+    final provider = NoteProvider(isTestMode: true);
 
-  
-    (provider.notes as List<Note>).addAll([
-      Note(title: "Học Flutter", content: "Rất vui"),
-      Note(title: "Ngủ", isCompleted: true),
-    ]);
-    provider.notifyListeners();
+    provider.testAdd(Note(title: "Học Flutter", content: "Rất vui"));
+    provider.testAdd(Note(title: "Ngủ", isCompleted: true));
 
     await tester.pumpWidget(
       ChangeNotifierProvider.value(
@@ -40,6 +34,7 @@ void main() {
         child: const MaterialApp(home: NoteListScreen()),
       ),
     );
+
 
     await tester.pumpAndSettle();
 

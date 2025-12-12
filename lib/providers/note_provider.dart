@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:localstore/localstore.dart';
 import '../models/note.dart';
@@ -8,14 +7,32 @@ class NoteProvider with ChangeNotifier {
   final String _collection = 'notes';
   List<Note> _notes = [];
 
+  bool isTestMode;
+
   List<Note> get notes => _notes;
 
-  NoteProvider() {
-    loadNotes(); 
+  NoteProvider({this.isTestMode = false}) {
+
+    if (!isTestMode) {
+      loadNotes();
+    } else {
+      debugPrint('NoteProvider: running in test mode, skip loadNotes()');
+    }
+  }
+
+  // Hàm dùng trong test để thêm note vào list nội bộ
+  void testAdd(Note note) {
+    _notes.add(note);
+    notifyListeners();
   }
 
   Future<void> loadNotes() async {
+    debugPrint('loadNotes called; isTestMode=$isTestMode');
     try {
+      if (isTestMode) {
+        return;
+      }
+
       final data = await _db.collection(_collection).get();
       if (data != null) {
         _notes = data.values.map((json) => Note.fromJson(json)).toList();
@@ -31,8 +48,11 @@ class NoteProvider with ChangeNotifier {
 
   Future<void> addNote(Note note) async {
     try {
-      await _db.collection(_collection).doc(note.id).set(note.toJson());
-      await loadNotes();
+      if (!isTestMode) {
+        await _db.collection(_collection).doc(note.id).set(note.toJson());
+      }
+      _notes.add(note);
+      notifyListeners();
     } catch (e) {
       debugPrint('Lỗi thêm note: $e');
       _showError('Không thể thêm ghi chú. Vui lòng thử lại!');
@@ -41,8 +61,16 @@ class NoteProvider with ChangeNotifier {
 
   Future<void> updateNote(Note note) async {
     try {
-      await _db.collection(_collection).doc(note.id).set(note.toJson());
-      await loadNotes();
+      if (!isTestMode) {
+        await _db.collection(_collection).doc(note.id).set(note.toJson());
+      }
+
+      final index = _notes.indexWhere((n) => n.id == note.id);
+      if (index != -1) {
+        _notes[index] = note;
+      }
+
+      notifyListeners();
     } catch (e) {
       debugPrint('Lỗi cập nhật note: $e');
       _showError('Không thể cập nhật ghi chú!');
@@ -51,17 +79,19 @@ class NoteProvider with ChangeNotifier {
 
   Future<void> deleteNote(String id) async {
     try {
-      await _db.collection(_collection).doc(id).delete();
-      await loadNotes();
+      if (!isTestMode) {
+        await _db.collection(_collection).doc(id).delete();
+      }
+
+      _notes.removeWhere((n) => n.id == id);
+      notifyListeners();
     } catch (e) {
       debugPrint('Lỗi xóa note: $e');
       _showError('Không thể xóa ghi chú!');
     }
   }
 
-  // Hàm hiển thị thông báo lỗi (gọi từ UI nếu cần)
   void _showError(String message) {
-    // Anh có thể gọi hàm này từ màn hình nếu muốn hiện SnackBar
     debugPrint(message);
   }
 }
