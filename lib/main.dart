@@ -13,11 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => NoteProvider()..loadNotes(),
+      create: (_) => NoteProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Note App',
-        theme: ThemeData(primarySwatch: Colors.deepPurple, useMaterial3: true),
+        theme: ThemeData(
+          primarySwatch: Colors.deepPurple,
+          useMaterial3: true,
+        ),
         home: const NoteListScreen(),
       ),
     );

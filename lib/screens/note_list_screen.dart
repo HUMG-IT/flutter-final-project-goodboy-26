@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/note_provider.dart';
@@ -38,16 +37,21 @@ class _NoteListContent extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.note_add, size: 100, color: Colors.deepPurple.shade200),
+                  Icon(Icons.note_add,
+                      size: 100, color: Colors.deepPurple.shade200),
                   const SizedBox(height: 24),
                   Text(
                     'Chưa có ghi chú nào',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey.shade700),
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade700),
                   ),
                   const SizedBox(height: 12),
                   Text(
                     'Nhấn nút + để tạo mới',
-                    style: TextStyle(fontSize: 18, color: Colors.grey.shade500),
+                    style: TextStyle(
+                        fontSize: 18, color: Colors.grey.shade500),
                   ),
                 ],
               ),
@@ -57,14 +61,21 @@ class _NoteListContent extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
               itemBuilder: (context, index) {
                 final note = provider.notes[index];
+
                 return Container(
                   margin: const EdgeInsets.only(bottom: 12),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: LinearGradient(
                       colors: note.isCompleted
-                          ? [Colors.green.shade50, Colors.green.shade100]
-                          : [Colors.deepPurple.shade50, Colors.deepPurple.shade100],
+                          ? [
+                              Colors.green.shade50,
+                              Colors.green.shade100
+                            ]
+                          : [
+                              Colors.deepPurple.shade50,
+                              Colors.deepPurple.shade100
+                            ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -77,42 +88,73 @@ class _NoteListContent extends StatelessWidget {
                     ],
                   ),
                   child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 16),
                     leading: CircleAvatar(
                       radius: 28,
-                      backgroundColor: note.isCompleted ? Colors.green : Colors.deepPurple,
+                      backgroundColor: note.isCompleted
+                          ? Colors.green
+                          : Colors.deepPurple,
                       child: Icon(
-                        note.isCompleted ? Icons.check_circle : Icons.edit_note,
+                        note.isCompleted
+                            ? Icons.check_circle
+                            : Icons.edit_note,
                         color: Colors.white,
                         size: 32,
                       ),
                     ),
                     title: Text(
-                      note.title.isEmpty ? '(Không có tiêu đề)' : note.title,
+                      note.title.isEmpty
+                          ? '(Không có tiêu đề)'
+                          : note.title,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                         color: Colors.black87,
                       ),
                     ),
+
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        note.content,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            note.content,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.grey.shade700),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            '${note.createdAt.day}/${note.createdAt.month}/${note.createdAt.year} '
+                            '${note.createdAt.hour.toString().padLeft(2, '0')}:'
+                            '${note.createdAt.minute.toString().padLeft(2, '0')}',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey.shade500,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+
                     trailing: Icon(
-                      note.isCompleted ? Icons.check_circle : Icons.circle_outlined,
-                      color: note.isCompleted ? Colors.green.shade700 : Colors.grey,
+                      note.isCompleted
+                          ? Icons.check_circle
+                          : Icons.circle_outlined,
+                      color: note.isCompleted
+                          ? Colors.green.shade700
+                          : Colors.grey,
                       size: 32,
                     ),
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => NoteDetailScreen(note: note),
+                          builder: (_) =>
+                              NoteDetailScreen(note: note),
                         ),
                       );
                     },
@@ -124,14 +166,17 @@ class _NoteListContent extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const NoteDetailScreen()),
+            MaterialPageRoute(
+                builder: (_) => const NoteDetailScreen()),
           );
         },
         backgroundColor: Colors.deepPurple.shade600,
         elevation: 10,
-        child: const Icon(Icons.add, size: 32, color: Colors.white),
+        child: const Icon(Icons.add,
+            size: 32, color: Colors.white),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.centerFloat,
     );
   }
 }

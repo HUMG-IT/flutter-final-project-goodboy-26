@@ -22,19 +22,33 @@ void main() {
     expect(find.byType(FloatingActionButton), findsOneWidget);
   });
 
-  testWidgets('Có thể thêm note giả và thấy trên UI', (tester) async {
+  testWidgets('Test theo createdAt (ngày–giờ)', (tester) async {
     final provider = NoteProvider(isTestMode: true);
 
-    provider.testAdd(Note(title: "Học Flutter", content: "Rất vui"));
-    provider.testAdd(Note(title: "Ngủ", isCompleted: true));
+    provider.testAdd(
+      Note(
+        title: 'Học Flutter',
+        content: 'Rất vui',
+        createdAt: DateTime(2025, 1, 1, 10, 0),
+      ),
+    );
+
+    provider.testAdd(
+      Note(
+        title: 'Ngủ',
+        isCompleted: true,
+        createdAt: DateTime(2025, 1, 2, 8, 0),
+      ),
+    );
 
     await tester.pumpWidget(
       ChangeNotifierProvider.value(
         value: provider,
-        child: const MaterialApp(home: NoteListScreen()),
+        child: const MaterialApp(
+          home: NoteListScreen(),
+        ),
       ),
     );
-
 
     await tester.pumpAndSettle();
 

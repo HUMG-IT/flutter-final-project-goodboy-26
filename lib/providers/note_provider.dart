@@ -12,7 +12,6 @@ class NoteProvider with ChangeNotifier {
   List<Note> get notes => _notes;
 
   NoteProvider({this.isTestMode = false}) {
-
     if (!isTestMode) {
       loadNotes();
     } else {
@@ -20,22 +19,24 @@ class NoteProvider with ChangeNotifier {
     }
   }
 
-  // Hàm dùng trong test để thêm note vào list nội bộ
   void testAdd(Note note) {
     _notes.add(note);
+    _sortByDate();
     notifyListeners();
   }
+
 
   Future<void> loadNotes() async {
     debugPrint('loadNotes called; isTestMode=$isTestMode');
     try {
-      if (isTestMode) {
-        return;
-      }
+      if (isTestMode) return;
 
       final data = await _db.collection(_collection).get();
       if (data != null) {
-        _notes = data.values.map((json) => Note.fromJson(json)).toList();
+        _notes = data.values
+            .map((json) => Note.fromJson(json))
+            .toList();
+        _sortByDate();
       } else {
         _notes = [];
       }
@@ -46,12 +47,14 @@ class NoteProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
   Future<void> addNote(Note note) async {
     try {
       if (!isTestMode) {
         await _db.collection(_collection).doc(note.id).set(note.toJson());
       }
       _notes.add(note);
+      _sortByDate(); // 👈
       notifyListeners();
     } catch (e) {
       debugPrint('Lỗi thêm note: $e');
@@ -68,6 +71,7 @@ class NoteProvider with ChangeNotifier {
       final index = _notes.indexWhere((n) => n.id == note.id);
       if (index != -1) {
         _notes[index] = note;
+        _sortByDate(); // 👈
       }
 
       notifyListeners();
@@ -89,6 +93,12 @@ class NoteProvider with ChangeNotifier {
       debugPrint('Lỗi xóa note: $e');
       _showError('Không thể xóa ghi chú!');
     }
+  }
+
+  void _sortByDate() {
+    _notes.sort(
+      (a, b) => b.createdAt.compareTo(a.createdAt), // mới nhất lên đầu
+    );
   }
 
   void _showError(String message) {
